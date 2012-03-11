@@ -1,0 +1,3 @@
+name: FalseBookIC-WorldEdit
+main: com.bukkit.gemo.FalseBook.IC.ICs.worldedit.WorldEditPackage
+version: ${project.version}
