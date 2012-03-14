@@ -15,73 +15,70 @@ import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1207 extends BaseIC
-{
-  public MC1207()
-  {
-    this.ICName = "SET BLOCK";
-    this.ICNumber = "[MC1207]";
-    setICGroup(ICGroup.WORLDEDIT);
-    this.chipState = new BaseChip(true, false, false, "Clock", "", "");
-    this.chipState.setOutputs("Output = Input", "", "");
-    this.chipState.setLines("BlockIDOn[:SubID][-BlockIDOff[:SubID]] (Examples: 'wool:15-stone' or 'grass' or 'dirt-44:2')", "Y offset, with 0 being the IC block.");
-    this.ICDescription = "The MC1207 sets the specified block to the specified blocktype whenever the input (the \"clock\") changes.";
-  }
+public class MC1207 extends BaseIC {
 
-  public void checkCreation(SignChangeEvent event)
-  {
-    ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(event.getLine(2), "-", true, 1, 2);
-    if (itemList == null) {
-      SignUtils.cancelSignCreation(event, "Line 3 is not valid. Usage: BlockIDOn[:SubID][-BlockIDOff[:SubID]]");
-      return;
+    public MC1207() {
+        this.ICName = "SET BLOCK";
+        this.ICNumber = "[MC1207]";
+        setICGroup(ICGroup.WORLDEDIT);
+        this.chipState = new BaseChip(true, false, false, "Clock", "", "");
+        this.chipState.setOutputs("Output = Input", "", "");
+        this.chipState.setLines("BlockIDOn[:SubID][-BlockIDOff[:SubID]] (Examples: 'wool:15-stone' or 'grass' or 'dirt-44:2')", "Y offset, with 0 being the IC block.");
+        this.ICDescription = "The MC1207 sets the specified block to the specified blocktype whenever the input (the \"clock\") changes.";
     }
 
-    for (FBItemType item : itemList) {
-      if (!BlockUtils.isValidBlock(item.getItemID())) {
-        SignUtils.cancelSignCreation(event, "'" + Material.getMaterial(item.getItemID()).name() + "' is not a block.");
-        return;
-      }
+    public void checkCreation(SignChangeEvent event) {
+        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(event.getLine(2), "-", true, 1, 2);
+        if (itemList == null) {
+            SignUtils.cancelSignCreation(event, "Line 3 is not valid. Usage: BlockIDOn[:SubID][-BlockIDOff[:SubID]]");
+            return;
+        }
 
+        for (FBItemType item : itemList) {
+            if (!BlockUtils.isValidBlock(item.getItemID())) {
+                SignUtils.cancelSignCreation(event, "'" + Material.getMaterial(item.getItemID()).name() + "' is not a block.");
+                return;
+            }
+
+        }
+
+        if (!Parser.isInteger(event.getLine(3))) {
+            SignUtils.cancelSignCreation(event, "Line 4 must be a number.");
+            return;
+        }
     }
 
-    if (!Parser.isInteger(event.getLine(3))) {
-      SignUtils.cancelSignCreation(event, "Line 4 must be a number.");
-      return;
+    public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
+        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(2), "-", true, 1, 2);
+        if (itemList == null) {
+            return;
+        }
+
+        for (FBItemType item : itemList) {
+            if (!BlockUtils.isValidBlock(item.getItemID())) {
+                return;
+            }
+
+        }
+
+        if (itemList.size() == 1) {
+            itemList.add(new FBItemType(0));
+        }
+
+        if (!Parser.isInteger(signBlock.getLine(3))) {
+            return;
+        }
+
+        Location newBlockLoc = getICBlock(signBlock).getBlock().getRelative(0, Parser.getInteger(signBlock.getLine(3), 1), 0).getLocation();
+        if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
+            newBlockLoc.getBlock().setTypeIdAndData(itemList.get(0).getItemID(), itemList.get(0).getItemDataAsByte(), true);
+            switchLever(Lever.BACK, signBlock, true);
+        } else {
+            newBlockLoc.getBlock().setTypeIdAndData(itemList.get(1).getItemID(), itemList.get(1).getItemDataAsByte(), true);
+            switchLever(Lever.BACK, signBlock, false);
+        }
+
+        itemList.clear();
+        itemList = null;
     }
-  }
-
-  public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs)
-  {
-    ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(2), "-", true, 1, 2);
-    if (itemList == null) {
-      return;
-    }
-
-    for (FBItemType item : itemList) {
-      if (!BlockUtils.isValidBlock(item.getItemID())) {
-        return;
-      }
-
-    }
-
-    if (itemList.size() == 1) {
-      itemList.add(new FBItemType(0));
-    }
-
-    if (!Parser.isInteger(signBlock.getLine(3))) {
-      return;
-    }
-
-    Location newBlockLoc = getICBlock(signBlock).getBlock().getRelative(0, Parser.getInteger(signBlock.getLine(3), 1), 0).getLocation();
-    if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-      newBlockLoc.getBlock().setTypeIdAndData(itemList.get(0).getItemID(), itemList.get(0).getItemDataAsByte(), true);
-      switchLever(Lever.BACK, signBlock, true);
-    } else {
-      newBlockLoc.getBlock().setTypeIdAndData(itemList.get(1).getItemID(), itemList.get(1).getItemDataAsByte(), true);
-      switchLever(Lever.BACK, signBlock, false);
-    }
-
-    itemList.clear();
-    itemList = null;
-  }
 }
