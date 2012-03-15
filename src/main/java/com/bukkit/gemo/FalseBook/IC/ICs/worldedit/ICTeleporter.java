@@ -128,10 +128,10 @@ public class ICTeleporter extends BaseIC {
                         continue;
                     }
                     Sign sign = (Sign) location.getBlock().getState();
-                    if (sign.getLine(2).length() < 1) {
+                    if (sign.getLine(1).length() < 1) {
                         continue;
                     }
-                    addTeleporter(playerName, sign.getLine(2), location);
+                    addTeleporter(playerName, sign.getLine(1), location);
                 }
             }
 
@@ -307,18 +307,18 @@ public class ICTeleporter extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        if (event.getLine(2).length() < 1) {
+        if (event.getLine(1).length() < 1) {
             SignUtils.cancelSignCreation(event, "Please enter a name of this teleport-IC in line 3.");
             return;
         }
 
-        if (getTargetStation(event.getPlayer().getName(), event.getLine(2)) != null) {
+        if (getTargetStation(event.getPlayer().getName(), event.getLine(1)) != null) {
             SignUtils.cancelSignCreation(event, "A [MC1700] with this name already exists. Please choose another name.");
             return;
         }
 
         if ((this.maxByPlayer < 0) || (getListSizeForPlayer(event.getPlayer().getName()) < this.maxByPlayer) || (UtilPermissions.playerCanUseCommand(event.getPlayer(), "falsebook.ic.mc1700.ignoreMaximum"))) {
-            addTeleporter(event.getPlayer().getName(), event.getLine(2), event.getBlock().getLocation());
+            addTeleporter(event.getPlayer().getName(), event.getLine(1), event.getBlock().getLocation());
             saveICs();
         } else {
             SignUtils.cancelSignCreation(event, "You have reached the maximumnumber of Teleport-ICs ( " + this.maxByPlayer + " ).");
@@ -346,11 +346,11 @@ public class ICTeleporter extends BaseIC {
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-            if (signBlock.getLine(2).length() < 1) {
+            if (signBlock.getLine(1).length() < 1) {
                 return;
             }
 
-            if (signBlock.getLine(3).length() < 1) {
+            if (signBlock.getLine(2).length() < 1) {
                 return;
             }
 
@@ -359,7 +359,7 @@ public class ICTeleporter extends BaseIC {
                 return;
             }
 
-            Sign targetStation = getTargetStation(stationOwner, signBlock.getLine(3));
+            Sign targetStation = getTargetStation(stationOwner, signBlock.getLine(2));
             if (targetStation == null) {
                 return;
             }
@@ -374,10 +374,10 @@ public class ICTeleporter extends BaseIC {
                 return;
             }
 
-            if (!targetStation.getLine(1).equalsIgnoreCase("[MC1700]")) {
+            if (!targetStation.getLine(1).equalsIgnoreCase("ic.teleporter")) {
                 return;
             }
-            if (!targetStation.getLine(2).equalsIgnoreCase(signBlock.getLine(3))) {
+            if (!targetStation.getLine(1).equalsIgnoreCase(signBlock.getLine(2))) {
                 return;
             }
             HashSet<Block> transportBlockListTarget = getBaseBlocks(targetStation);
@@ -398,7 +398,7 @@ public class ICTeleporter extends BaseIC {
                     targetLoc.setX(targetLoc.getX() + 0.5D);
                     targetLoc.setZ(targetLoc.getZ() + 0.5D);
                     player.teleport(targetLoc);
-                    ChatUtils.printInfo(player, "[FB-IC]", ChatColor.GREEN, "You were teleported to '" + signBlock.getLine(3) + "'!");
+                    ChatUtils.printInfo(player, "[FB-IC]", ChatColor.GREEN, "You were teleported to '" + signBlock.getLine(2) + "'!");
                 }
             }
             switchLever(Lever.BACK, signBlock, true);

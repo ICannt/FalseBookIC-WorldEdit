@@ -27,12 +27,12 @@ public class ICDispenser extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        if (!Parser.isBlock(event.getLine(2))) {
+        if (!Parser.isBlock(event.getLine(1))) {
             SignUtils.cancelSignCreation(event, "Item not found.");
             return;
         }
 
-        if (!Parser.isIntegerOrEmpty(event.getLine(3))) {
+        if (!Parser.isIntegerOrEmpty(event.getLine(2))) {
             SignUtils.cancelSignCreation(event, "Line 4 must be a number.");
             return;
         }
@@ -40,15 +40,15 @@ public class ICDispenser extends BaseIC {
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-            if (!Parser.isBlock(signBlock.getLine(2))) {
+            if (!Parser.isBlock(signBlock.getLine(1))) {
                 return;
             }
-            if (!Parser.isIntegerOrEmpty(signBlock.getLine(3))) {
+            if (!Parser.isIntegerOrEmpty(signBlock.getLine(2))) {
                 return;
             }
 
-            FBBlockType item = BlockUtils.getItemFromString(signBlock.getLine(2));
-            int count = Parser.getInteger(signBlock.getLine(3), 1);
+            FBBlockType item = BlockUtils.getItemFromString(signBlock.getLine(1));
+            int count = Parser.getInteger(signBlock.getLine(2), 1);
             if ((count < 1) || (count > 64)) {
                 count = 64;
             }

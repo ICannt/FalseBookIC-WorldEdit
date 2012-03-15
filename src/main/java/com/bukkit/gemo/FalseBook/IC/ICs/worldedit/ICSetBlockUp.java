@@ -27,41 +27,41 @@ public class ICSetBlockUp extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        if (!Parser.isBlock(event.getLine(2))) {
+        if (!Parser.isBlock(event.getLine(1))) {
             SignUtils.cancelSignCreation(event, "Item not found.");
             return;
         }
 
-        FBBlockType item = Parser.getBlock(event.getLine(2));
+        FBBlockType item = Parser.getBlock(event.getLine(1));
         if (!BlockUtils.isValidBlock(item.getItemID())) {
             SignUtils.cancelSignCreation(event, "This is not a valid blocktype.");
             return;
         }
 
-        if (!Parser.isStringOrEmpty(event.getLine(3), "force")) {
+        if (!Parser.isStringOrEmpty(event.getLine(2), "force")) {
             SignUtils.cancelSignCreation(event, "Line 4 must be empty or 'FORCE'.");
             return;
         }
 
-        event.setLine(3, event.getLine(3).toUpperCase());
+        event.setLine(2, event.getLine(2).toUpperCase());
     }
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-            if (!Parser.isBlock(signBlock.getLine(2))) {
+            if (!Parser.isBlock(signBlock.getLine(1))) {
                 return;
             }
 
-            FBBlockType item = Parser.getBlock(signBlock.getLine(2));
+            FBBlockType item = Parser.getBlock(signBlock.getLine(1));
             if (!BlockUtils.isValidBlock(item.getItemID())) {
                 return;
             }
 
-            if (!Parser.isStringOrEmpty(signBlock.getLine(3), "force")) {
+            if (!Parser.isStringOrEmpty(signBlock.getLine(2), "force")) {
                 return;
             }
 
-            boolean force = Parser.isString(signBlock.getLine(3), "force");
+            boolean force = Parser.isString(signBlock.getLine(2), "force");
 
             Location newBlockLoc = getICBlock(signBlock).getBlock().getRelative(0, 2, 0).getLocation();
             if ((newBlockLoc.getBlock().getType().equals(Material.AIR)) || (force)) {

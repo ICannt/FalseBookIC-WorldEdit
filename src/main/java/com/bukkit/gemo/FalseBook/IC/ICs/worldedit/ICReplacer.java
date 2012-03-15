@@ -36,10 +36,10 @@ public class ICReplacer extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        if (event.getLine(3).length() > 0) {
-            if (event.getLine(3).split(":").length == 1) {
+        if (event.getLine(2).length() > 0) {
+            if (event.getLine(2).split(":").length == 1) {
                 try {
-                    if (Integer.valueOf(event.getLine(3)).intValue() >= 0) {
+                    if (Integer.valueOf(event.getLine(2)).intValue() >= 0) {
                     } else {
                         SignUtils.cancelSignCreation(event, "Ticks must be >= 0");
                         return;
@@ -49,7 +49,7 @@ public class ICReplacer extends BaseIC {
                     return;
                 }
             } else {
-                String[] split = event.getLine(3).split(":");
+                String[] split = event.getLine(2).split(":");
                 try {
                     if (Integer.valueOf(split[0]).intValue() < 0) {
                         SignUtils.cancelSignCreation(event, "Ticks must be >= 0");
@@ -65,10 +65,10 @@ public class ICReplacer extends BaseIC {
                 }
             }
         } else {
-            event.setLine(3, "1:1");
+            event.setLine(2, "1:1");
         }
 
-        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(event.getLine(2), "-", false, 2, 2);
+        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(event.getLine(1), "-", false, 2, 2);
         if (itemList == null) {
             SignUtils.cancelSignCreation(event, "Line 3 is not valid. Usage: BlockIDOn[:SubID]-BlockIDOff[:SubID]");
             return;
@@ -91,10 +91,10 @@ public class ICReplacer extends BaseIC {
         }
 
         SchedulerClass newSched = new SchedulerClass(this, signBlock.getBlock().getLocation(), signBlock);
-        if (signBlock.getLine(3).length() > 0) {
-            if (signBlock.getLine(3).split(":").length == 1) {
+        if (signBlock.getLine(2).length() > 0) {
+            if (signBlock.getLine(2).split(":").length == 1) {
                 try {
-                    if ((newSched.waitTicks = Integer.valueOf(signBlock.getLine(3)).intValue()) >= 0) {
+                    if ((newSched.waitTicks = Integer.valueOf(signBlock.getLine(2)).intValue()) >= 0) {
                     } else {
                         return;
                     }
@@ -102,7 +102,7 @@ public class ICReplacer extends BaseIC {
                     return;
                 }
             } else {
-                String[] split = signBlock.getLine(3).split(":");
+                String[] split = signBlock.getLine(2).split(":");
                 try {
                     if ((newSched.waitTicks = Integer.valueOf(split[0]).intValue()) < 0) {
                         return;
@@ -118,10 +118,10 @@ public class ICReplacer extends BaseIC {
         } else {
             newSched.waitTicks = 1;
             newSched.sortType = 1;
-            signBlock.setLine(3, "1:1");
+            signBlock.setLine(2, "1:1");
         }
 
-        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(2), "-", false, 2, 2);
+        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(1), "-", false, 2, 2);
         if (itemList == null) {
             return;
         }

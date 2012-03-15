@@ -29,7 +29,7 @@ public class ICSetPBridge extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(event.getLine(2), "-", true, 1, 2);
+        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(event.getLine(1), "-", true, 1, 2);
         if (itemList == null) {
             SignUtils.cancelSignCreation(event, "Line 3 is not valid. Usage: BlockIDOn[:SubID][-BlockIDOff[:SubID]]");
             return;
@@ -43,9 +43,9 @@ public class ICSetPBridge extends BaseIC {
 
         }
 
-        if (event.getLine(3).length() > 0) {
+        if (event.getLine(2).length() > 0) {
             try {
-                String[] bridgeSplit = event.getLine(3).split(":");
+                String[] bridgeSplit = event.getLine(2).split(":");
                 if ((bridgeSplit[0].charAt(0) == 'l') || (bridgeSplit[0].charAt(0) == 'L')) {
                     bridgeSplit[0] = bridgeSplit[0].substring(1);
                 }
@@ -124,8 +124,8 @@ public class ICSetPBridge extends BaseIC {
         Point bridgeSize = null;
         Boolean light = Boolean.valueOf(false);
 
-        if (signBlock.getLine(3) != null) {
-            String[] bridgeSplit = signBlock.getLine(3).split(":");
+        if (signBlock.getLine(2) != null) {
+            String[] bridgeSplit = signBlock.getLine(2).split(":");
             if ((bridgeSplit[0].charAt(0) == 'l') || (bridgeSplit[0].charAt(0) == 'L')) {
                 light = Boolean.valueOf(true);
                 bridgeSplit[0] = bridgeSplit[0].substring(1);
@@ -148,7 +148,7 @@ public class ICSetPBridge extends BaseIC {
             bridgeSize.x += 2;
         }
 
-        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(2), "-", true, 1, 2);
+        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(1), "-", true, 1, 2);
         if (itemList == null) {
             return;
         }

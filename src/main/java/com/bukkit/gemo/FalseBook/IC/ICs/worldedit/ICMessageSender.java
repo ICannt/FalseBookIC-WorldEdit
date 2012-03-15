@@ -26,7 +26,7 @@ public class ICMessageSender extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        if (event.getLine(3).length() < 1) {
+        if (event.getLine(2).length() < 1) {
             SignUtils.cancelSignCreation(event, "Enter a message in line 4!");
             return;
         }
@@ -34,8 +34,8 @@ public class ICMessageSender extends BaseIC {
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-            String toName = signBlock.getLine(2);
-            String message = signBlock.getLine(3);
+            String toName = signBlock.getLine(1);
+            String message = signBlock.getLine(2);
             if (message.length() < 1) {
                 return;
             }

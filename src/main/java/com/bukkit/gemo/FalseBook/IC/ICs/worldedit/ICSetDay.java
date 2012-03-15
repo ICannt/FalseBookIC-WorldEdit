@@ -20,6 +20,7 @@ public class ICSetDay extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
+        event.setLine(1, "");
         event.setLine(2, "");
         event.setLine(3, "");
     }

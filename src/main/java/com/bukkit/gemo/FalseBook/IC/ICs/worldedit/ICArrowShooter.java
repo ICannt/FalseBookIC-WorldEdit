@@ -26,8 +26,8 @@ public class ICArrowShooter extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        String speedSpreadLine = event.getLine(2);
-        String vertVelLine = event.getLine(3);
+        String speedSpreadLine = event.getLine(1);
+        String vertVelLine = event.getLine(2);
         try {
             if (speedSpreadLine.length() > 0) {
                 String[] parts = speedSpreadLine.split(":");
@@ -72,8 +72,8 @@ public class ICArrowShooter extends BaseIC {
             location.setY(location.getY() + 0.5D);
             location.setZ(location.getZ() + 0.5D);
 
-            String speedSpreadLine = signBlock.getLine(2);
-            String vertVelLine = signBlock.getLine(3);
+            String speedSpreadLine = signBlock.getLine(1);
+            String vertVelLine = signBlock.getLine(2);
             try {
                 if (speedSpreadLine.length() > 0) {
                     String[] parts = speedSpreadLine.split(":");

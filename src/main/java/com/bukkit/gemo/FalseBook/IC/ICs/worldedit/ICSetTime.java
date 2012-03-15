@@ -24,25 +24,26 @@ public class ICSetTime extends BaseIC {
 
     public void checkCreation(SignChangeEvent event) {
         try {
-            Integer.valueOf(event.getLine(2));
+            Integer.valueOf(event.getLine(1));
         } catch (Exception e) {
             SignUtils.cancelSignCreation(event, ChatColor.RED + "Line 3 must be a number.");
             return;
         }
 
-        if (Integer.valueOf(event.getLine(2)).intValue() < 0) {
-            event.setLine(2, "0");
+        if (Integer.valueOf(event.getLine(1)).intValue() < 0) {
+            event.setLine(1, "0");
         }
-        if (Integer.valueOf(event.getLine(2)).intValue() >= 24000) {
-            event.setLine(2, "24000");
+        if (Integer.valueOf(event.getLine(1)).intValue() >= 24000) {
+            event.setLine(1, "24000");
         }
+        event.setLine(2, "");
         event.setLine(3, "");
     }
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         int zeit = 0;
         try {
-            zeit = Integer.valueOf(signBlock.getLine(2)).intValue();
+            zeit = Integer.valueOf(signBlock.getLine(1)).intValue();
             if ((zeit < 0) || (zeit >= 24000)) {
                 zeit = 0;
             }

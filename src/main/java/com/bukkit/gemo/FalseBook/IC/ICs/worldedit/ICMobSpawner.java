@@ -37,12 +37,12 @@ public class ICMobSpawner extends BaseIC {
 
     public void checkCreation(SignChangeEvent event) {
         EntityType[] entityTypes = EntityType.values();
-        if (event.getLine(2) == null) {
-            SignUtils.cancelSignCreation(event, "Mob '" + event.getLine(2) + "' not found.");
+        if (event.getLine(1) == null) {
+            SignUtils.cancelSignCreation(event, "Mob '" + event.getLine(1) + "' not found.");
             return;
         }
         boolean found = false;
-        String mobLine = event.getLine(2).toLowerCase();
+        String mobLine = event.getLine(1).toLowerCase();
         mobLine = mobLine.replace("monster", "");
         mobLine = mobLine.replace("c:", "");
         for (int i = 0; i < entityTypes.length; i++) {
@@ -50,7 +50,7 @@ public class ICMobSpawner extends BaseIC {
                 continue;
             }
             if ((mobLine.equalsIgnoreCase(entityTypes[i].name())) || (mobLine.equalsIgnoreCase("pig_zombie")) || (mobLine.equalsIgnoreCase("DOG")) || (mobLine.equalsIgnoreCase("ANGRYWOLF")) || (mobLine.equalsIgnoreCase("MAGMACUBE")) || (mobLine.equalsIgnoreCase("BLAZE"))) {
-                event.setLine(2, event.getLine(2).toUpperCase());
+                event.setLine(1, event.getLine(2).toUpperCase());
                 found = true;
                 break;
             }
@@ -63,7 +63,7 @@ public class ICMobSpawner extends BaseIC {
                 }
                 name = entityTypes[i].name().replace(" ", "").replace("_", "").replace("-", "");
                 if (mobLine.equalsIgnoreCase(name)) {
-                    event.setLine(2, event.getLine(2).toUpperCase());
+                    event.setLine(1, event.getLine(1).toUpperCase());
                     found = true;
                     break;
                 }
@@ -71,16 +71,16 @@ public class ICMobSpawner extends BaseIC {
         }
 
         if (!found) {
-            SignUtils.cancelSignCreation(event, "Mob '" + event.getLine(2) + "' not found.");
+            SignUtils.cancelSignCreation(event, "Mob '" + event.getLine(1) + "' not found.");
             return;
         }
 
-        if (!Parser.isIntegerOrEmpty(event.getLine(3))) {
+        if (!Parser.isIntegerOrEmpty(event.getLine(2))) {
             SignUtils.cancelSignCreation(event, "Line 4 must be an integer.");
             return;
         }
-        if ((Parser.isInteger(event.getLine(3)))
-                && (Parser.getInteger(event.getLine(3), 1) < 1)) {
+        if ((Parser.isInteger(event.getLine(2)))
+                && (Parser.getInteger(event.getLine(2), 1) < 1)) {
             SignUtils.cancelSignCreation(event, "Line 4 must be > 0.");
             return;
         }
@@ -91,10 +91,10 @@ public class ICMobSpawner extends BaseIC {
             World w = signBlock.getWorld();
 
             int mobCount = 0;
-            if (!Parser.isIntegerOrEmpty(signBlock.getLine(3))) {
+            if (!Parser.isIntegerOrEmpty(signBlock.getLine(2))) {
                 return;
             }
-            mobCount = Parser.getInteger(signBlock.getLine(3), 1);
+            mobCount = Parser.getInteger(signBlock.getLine(2), 1);
             if (mobCount < 1) {
                 return;
             }
@@ -104,7 +104,7 @@ public class ICMobSpawner extends BaseIC {
             boolean isDog = false;
             boolean isSpecial = false;
             Class clazz = null;
-            String mobLine = signBlock.getLine(2).toLowerCase();
+            String mobLine = signBlock.getLine(1).toLowerCase();
             mobLine = mobLine.replace("monster", "");
             if (mobLine.startsWith("c:")) {
                 isChild = true;

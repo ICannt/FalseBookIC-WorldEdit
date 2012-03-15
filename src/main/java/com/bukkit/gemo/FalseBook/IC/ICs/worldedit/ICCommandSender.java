@@ -25,16 +25,16 @@ public class ICCommandSender extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        String str = event.getLine(2) + event.getLine(3);
+        String str = event.getLine(1) + event.getLine(2) + event.getLine(3);
         if (str.length() < 1) {
-            SignUtils.cancelSignCreation(event, "Enter a command in line 3 AND/OR 4!");
+            SignUtils.cancelSignCreation(event, "Enter a command in line 1 AND/OR 3+4!");
             return;
         }
     }
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-            String message = signBlock.getLine(2) + signBlock.getLine(3);
+            String message = signBlock.getLine(1) + signBlock.getLine(2) + signBlock.getLine(3);
             if (message.length() < 1) {
                 return;
             }

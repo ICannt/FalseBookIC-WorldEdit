@@ -28,7 +28,7 @@ public class ICSetBlock extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(event.getLine(2), "-", true, 1, 2);
+        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(event.getLine(1), "-", true, 1, 2);
         if (itemList == null) {
             SignUtils.cancelSignCreation(event, "Line 3 is not valid. Usage: BlockIDOn[:SubID][-BlockIDOff[:SubID]]");
             return;
@@ -42,14 +42,14 @@ public class ICSetBlock extends BaseIC {
 
         }
 
-        if (!Parser.isInteger(event.getLine(3))) {
+        if (!Parser.isInteger(event.getLine(2))) {
             SignUtils.cancelSignCreation(event, "Line 4 must be a number.");
             return;
         }
     }
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
-        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(2), "-", true, 1, 2);
+        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(1), "-", true, 1, 2);
         if (itemList == null) {
             return;
         }
@@ -65,11 +65,11 @@ public class ICSetBlock extends BaseIC {
             itemList.add(new FBItemType(0));
         }
 
-        if (!Parser.isInteger(signBlock.getLine(3))) {
+        if (!Parser.isInteger(signBlock.getLine(2))) {
             return;
         }
 
-        Location newBlockLoc = getICBlock(signBlock).getBlock().getRelative(0, Parser.getInteger(signBlock.getLine(3), 1), 0).getLocation();
+        Location newBlockLoc = getICBlock(signBlock).getBlock().getRelative(0, Parser.getInteger(signBlock.getLine(2), 1), 0).getLocation();
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
             newBlockLoc.getBlock().setTypeIdAndData(itemList.get(0).getItemID(), itemList.get(0).getItemDataAsByte(), true);
             switchLever(Lever.BACK, signBlock, true);

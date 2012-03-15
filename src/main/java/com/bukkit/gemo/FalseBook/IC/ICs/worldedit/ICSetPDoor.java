@@ -29,7 +29,7 @@ public class ICSetPDoor extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(event.getLine(2), "-", true, 1, 2);
+        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(event.getLine(1), "-", true, 1, 2);
         if (itemList == null) {
             SignUtils.cancelSignCreation(event, "Line 3 is not valid. Usage: BlockIDOn[:SubID][-BlockIDOff[:SubID]]");
             return;
@@ -43,9 +43,9 @@ public class ICSetPDoor extends BaseIC {
 
         }
 
-        if (event.getLine(3).length() > 0) {
+        if (event.getLine(2).length() > 0) {
             try {
-                String[] doorSplit = event.getLine(3).split(":");
+                String[] doorSplit = event.getLine(2).split(":");
 
                 String[] doorPosition = doorSplit[0].split(",");
                 Integer.parseInt(doorPosition[0]);
@@ -120,8 +120,8 @@ public class ICSetPDoor extends BaseIC {
         Vector doorPosition = null;
         Point doorSize = null;
 
-        if (signBlock.getLine(3) != null) {
-            String[] doorSplit = signBlock.getLine(3).split(":");
+        if (signBlock.getLine(2) != null) {
+            String[] doorSplit = signBlock.getLine(2).split(":");
             doorPosition = FetchVector(doorSplit[0], 0);
             if (doorSplit.length == 2) {
                 doorSize = FetchPoint(doorSplit[1], 1);
@@ -133,7 +133,7 @@ public class ICSetPDoor extends BaseIC {
             return;
         }
 
-        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(2), "-", true, 1, 2);
+        ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(1), "-", true, 1, 2);
         if (itemList == null) {
             return;
         }

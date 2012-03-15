@@ -24,28 +24,29 @@ public class ICSetWeather extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
+        event.setLine(2, "");
         event.setLine(3, "");
 
-        if ((!Parser.isString(event.getLine(2), "sun")) && (!Parser.isString(event.getLine(2), "rain")) && (!Parser.isString(event.getLine(2), "storm"))) {
+        if ((!Parser.isString(event.getLine(1), "sun")) && (!Parser.isString(event.getLine(1), "rain")) && (!Parser.isString(event.getLine(1), "storm"))) {
             SignUtils.cancelSignCreation(event, ChatColor.RED + "Line 3 must be sun, rain or storm");
             return;
         }
-        event.setLine(2, event.getLine(2).toUpperCase());
+        event.setLine(1, event.getLine(1).toUpperCase());
     }
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
-        if ((!Parser.isString(signBlock.getLine(2), "sun")) && (!Parser.isString(signBlock.getLine(2), "rain")) && (!Parser.isString(signBlock.getLine(2), "storm"))) {
+        if ((!Parser.isString(signBlock.getLine(1), "sun")) && (!Parser.isString(signBlock.getLine(1), "rain")) && (!Parser.isString(signBlock.getLine(1), "storm"))) {
             return;
         }
 
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-            if (signBlock.getLine(2).equalsIgnoreCase("sun")) {
+            if (signBlock.getLine(1).equalsIgnoreCase("sun")) {
                 signBlock.getWorld().setStorm(false);
                 signBlock.getWorld().setThundering(false);
-            } else if (signBlock.getLine(2).equalsIgnoreCase("rain")) {
+            } else if (signBlock.getLine(1).equalsIgnoreCase("rain")) {
                 signBlock.getWorld().setStorm(true);
                 signBlock.getWorld().setThundering(false);
-            } else if (signBlock.getLine(2).equalsIgnoreCase("storm")) {
+            } else if (signBlock.getLine(1).equalsIgnoreCase("storm")) {
                 signBlock.getWorld().setStorm(true);
                 signBlock.getWorld().setThundering(true);
             }

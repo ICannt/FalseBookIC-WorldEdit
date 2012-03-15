@@ -32,22 +32,22 @@ public class ICVanisher extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        if (!Parser.isIntegerWithOffset(event.getLine(2))) {
+        if (!Parser.isIntegerWithOffset(event.getLine(1))) {
             SignUtils.cancelSignCreation(event, "Line 3 must be a number or a number with a vector.");
             return;
         }
 
-        Integer radius = Parser.getIntegerFromOffsetLine(event.getLine(2), 0);
-        Vector vector = Parser.getVectorFromOffsetLine(event.getLine(2));
+        Integer radius = Parser.getIntegerFromOffsetLine(event.getLine(1), 0);
+        Vector vector = Parser.getVectorFromOffsetLine(event.getLine(1));
         if (radius < 0) {
             radius = 0;
         }
         if ((vector.getBlockX() != 0) || (vector.getBlockY() != 0) || (vector.getBlockZ() != 0)) {
-            event.setLine(2, radius + "=" + vector.getBlockX() + ":" + vector.getBlockY() + ":" + vector.getBlockZ());
+            event.setLine(1, radius + "=" + vector.getBlockX() + ":" + vector.getBlockY() + ":" + vector.getBlockZ());
         } else {
-            event.setLine(2, radius.toString());
+            event.setLine(1, radius.toString());
         }
-        if (SignUtils.parseLineToItemListWithSize(event.getLine(3), "-", false, 1, 9999) == null) {
+        if (SignUtils.parseLineToItemListWithSize(event.getLine(2), "-", false, 1, 9999) == null) {
             SignUtils.cancelSignCreation(event, "Please enter at least one item in Line 4.");
             return;
         }
@@ -55,19 +55,19 @@ public class ICVanisher extends BaseIC {
 
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
-            if (!Parser.isIntegerWithOffset(signBlock.getLine(2))) {
+            if (!Parser.isIntegerWithOffset(signBlock.getLine(1))) {
                 return;
             }
-            int range = Parser.getIntegerFromOffsetLine(signBlock.getLine(2), 0);
+            int range = Parser.getIntegerFromOffsetLine(signBlock.getLine(1), 0);
             if (range < 0) {
                 range = 0;
             }
-            Vector offsetVector = Parser.getVectorFromOffsetLine(signBlock.getLine(2));
+            Vector offsetVector = Parser.getVectorFromOffsetLine(signBlock.getLine(1));
 
             boolean result = false;
             Location blockLoc = getICBlock(signBlock, offsetVector);
 
-            ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(3), "-", false, 1, 9999);
+            ArrayList<FBItemType> itemList = SignUtils.parseLineToItemListWithSize(signBlock.getLine(2), "-", false, 1, 9999);
             if (itemList == null) {
                 return;
             }
