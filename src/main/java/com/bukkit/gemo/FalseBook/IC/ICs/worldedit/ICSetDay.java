@@ -8,11 +8,11 @@ import com.bukkit.gemo.FalseBook.IC.ICs.Lever;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1231 extends BaseIC {
+public class ICSetDay extends BaseIC {
 
-    public MC1231() {
+    public ICSetDay() {
         this.ICName = "TIME CONTROL";
-        this.ICNumber = "[MC1231]";
+        this.ICNumber = "ic.setday";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Set to day", "", "");
         this.chipState.setOutputs("Output = Input", "", "");

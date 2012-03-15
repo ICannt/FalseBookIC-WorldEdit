@@ -8,11 +8,11 @@ import com.bukkit.gemo.FalseBook.IC.ICs.Lever;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC3231 extends BaseIC {
+public class ICTimeControl extends BaseIC {
 
-    public MC3231() {
+    public ICTimeControl() {
         this.ICName = "TIME CONTROL";
-        this.ICNumber = "[MC3231]";
+        this.ICNumber = "ic.timecontrol";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, true, false, "Clock", "Datainput", "");
         this.chipState.setOutputs("Output = Input", "", "");

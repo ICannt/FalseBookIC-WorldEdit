@@ -19,11 +19,11 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-public class MC1265 extends BaseIC {
+public class ICVanisher extends BaseIC {
 
-    public MC1265() {
+    public ICVanisher() {
         this.ICName = "ITEM VANISHER";
-        this.ICNumber = "[MC1265]";
+        this.ICNumber = "ic.vanisher";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output", "", "");

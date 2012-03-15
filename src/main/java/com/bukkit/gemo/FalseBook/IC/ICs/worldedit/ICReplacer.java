@@ -20,14 +20,14 @@ import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.util.Vector;
 
-public class MC1220 extends BaseIC {
+public class ICReplacer extends BaseIC {
 
     public HashMap<String, SchedulerClass> TaskList = new HashMap<String, SchedulerClass>();
 
-    public MC1220() {
+    public ICReplacer() {
         this.core = FalseBookICCore.getInstance();
         this.ICName = "BLOCK-REPLACER";
-        this.ICNumber = "[MC1220]";
+        this.ICNumber = "ic.replacer";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");
@@ -179,7 +179,7 @@ public class MC1220 extends BaseIC {
             implements Runnable {
 
         public int TaskID = -1;
-        public MC1220 father;
+        public ICReplacer father;
         public Location signLoc;
         public Sign signBlock;
         public int nowBlock = 0;
@@ -197,7 +197,7 @@ public class MC1220 extends BaseIC {
         public ArrayList<Block> QueuedBlocks0Ticks = new ArrayList<Block>();
         public ArrayList<Block> QueuedBlocks1Ticks = new ArrayList<Block>();
 
-        public SchedulerClass(MC1220 father, Location signLoc, Sign signBlock) {
+        public SchedulerClass(ICReplacer father, Location signLoc, Sign signBlock) {
             this.father = father;
             this.signLoc = signLoc;
             this.signBlock = signBlock;
@@ -304,9 +304,9 @@ public class MC1220 extends BaseIC {
                     this.QueuedBlocks1Ticks.clear();
 
                     for (int i = 0; i < this.QueuedBlocks0Ticks.size(); i++) {
-                        if ((this.QueuedBlocks0Ticks.get(i).getTypeId() == this.oldBlockID) && (this.QueuedBlocks0Ticks.get(i).getData() == this.oldBlockData) && (this.nowBlock < MC1220.this.core.getMaxReplaceBlocks())) {
+                        if ((this.QueuedBlocks0Ticks.get(i).getTypeId() == this.oldBlockID) && (this.QueuedBlocks0Ticks.get(i).getData() == this.oldBlockData) && (this.nowBlock < ICReplacer.this.core.getMaxReplaceBlocks())) {
                             this.nowBlock += 1;
-                        } else if (this.nowBlock >= MC1220.this.core.getMaxReplaceBlocks()) {
+                        } else if (this.nowBlock >= ICReplacer.this.core.getMaxReplaceBlocks()) {
                             for (int j = 0; j < this.AllBlocks.size(); j++) {
                                 this.AllBlocks.get(j).setTypeIdAndData(this.newBlockID, this.newBlockData, false);
                             }
@@ -332,7 +332,7 @@ public class MC1220 extends BaseIC {
                     }
 
                     this.QueuedBlocks0Ticks.clear();
-                    if ((this.QueuedBlocks1Ticks.size() == 0) || (this.nowBlock >= MC1220.this.core.getMaxReplaceBlocks())) {
+                    if ((this.QueuedBlocks1Ticks.size() == 0) || (this.nowBlock >= ICReplacer.this.core.getMaxReplaceBlocks())) {
                         this.father.TaskList.remove(this.signLoc.getBlock().getLocation().toString());
                         Bukkit.getServer().getScheduler().cancelTask(this.TaskID);
                         this.TaskID = -1;
@@ -369,10 +369,10 @@ public class MC1220 extends BaseIC {
                     this.QueuedBlocks1Ticks.clear();
 
                     for (int i = 0; i < this.QueuedBlocks0Ticks.size(); i++) {
-                        if ((this.QueuedBlocks0Ticks.get(i).getTypeId() == this.oldBlockID) && (this.QueuedBlocks0Ticks.get(i).getData() == this.oldBlockData) && (this.nowBlock < MC1220.this.core.getMaxReplaceBlocks())) {
+                        if ((this.QueuedBlocks0Ticks.get(i).getTypeId() == this.oldBlockID) && (this.QueuedBlocks0Ticks.get(i).getData() == this.oldBlockData) && (this.nowBlock < ICReplacer.this.core.getMaxReplaceBlocks())) {
                             this.nowBlock += 1;
                             this.QueuedBlocks0Ticks.get(i).setTypeIdAndData(this.newBlockID, this.newBlockData, false);
-                        } else if (this.nowBlock >= MC1220.this.core.getMaxReplaceBlocks()) {
+                        } else if (this.nowBlock >= ICReplacer.this.core.getMaxReplaceBlocks()) {
                             this.father.TaskList.remove(this.signLoc.getBlock().getLocation().toString());
                             Bukkit.getServer().getScheduler().cancelTask(this.TaskID);
                             this.AllBlocks.clear();
@@ -394,8 +394,8 @@ public class MC1220 extends BaseIC {
                     }
 
                     this.QueuedBlocks0Ticks.clear();
-                    if ((this.QueuedBlocks1Ticks.size() == 0) || (this.nowBlock >= MC1220.this.core.getMaxReplaceBlocks())) {
-                        for (int i = 0; (i < this.QueuedBlocks1Ticks.size()) && (this.nowBlock < MC1220.this.core.getMaxReplaceBlocks()); i++) {
+                    if ((this.QueuedBlocks1Ticks.size() == 0) || (this.nowBlock >= ICReplacer.this.core.getMaxReplaceBlocks())) {
+                        for (int i = 0; (i < this.QueuedBlocks1Ticks.size()) && (this.nowBlock < ICReplacer.this.core.getMaxReplaceBlocks()); i++) {
                             this.QueuedBlocks1Ticks.get(i).setTypeIdAndData(this.newBlockID, this.newBlockData, false);
                             this.nowBlock += 1;
                         }
@@ -433,11 +433,11 @@ public class MC1220 extends BaseIC {
                         this.QueuedBlocks1Ticks.clear();
 
                         for (int i = 0; i < this.QueuedBlocks0Ticks.size(); i++) {
-                            if ((this.QueuedBlocks0Ticks.get(i).getTypeId() == this.oldBlockID) && (this.QueuedBlocks0Ticks.get(i).getData() == this.oldBlockData) && (this.AllBlocks.size() < MC1220.this.core.getMaxReplaceBlocks())) {
+                            if ((this.QueuedBlocks0Ticks.get(i).getTypeId() == this.oldBlockID) && (this.QueuedBlocks0Ticks.get(i).getData() == this.oldBlockData) && (this.AllBlocks.size() < ICReplacer.this.core.getMaxReplaceBlocks())) {
                                 if (!this.AllBlocks.contains(this.QueuedBlocks0Ticks.get(i))) {
                                     this.AllBlocks.add(this.QueuedBlocks0Ticks.get(i));
                                 }
-                            } else if (this.AllBlocks.size() >= MC1220.this.core.getMaxReplaceBlocks()) {
+                            } else if (this.AllBlocks.size() >= ICReplacer.this.core.getMaxReplaceBlocks()) {
                                 sortList1(this.signBlock.getBlock(), this.AllBlocks);
                                 this.thisTick = 0;
                                 this.searchEnd = true;
@@ -451,7 +451,7 @@ public class MC1220 extends BaseIC {
                                 this.QueuedBlocks1Ticks = null;
                                 this.father.TaskList.remove(this.signLoc.getBlock().getLocation().toString());
                                 Bukkit.getServer().getScheduler().cancelTask(this.TaskID);
-                                this.TaskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(MC1220.this.core, this, 1L, this.waitTicks);
+                                this.TaskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(ICReplacer.this.core, this, 1L, this.waitTicks);
                                 return;
                             }
 
@@ -467,7 +467,7 @@ public class MC1220 extends BaseIC {
                         }
 
                         this.QueuedBlocks0Ticks.clear();
-                        if ((this.QueuedBlocks1Ticks.size() == 0) || (this.nowBlock >= MC1220.this.core.getMaxReplaceBlocks())) {
+                        if ((this.QueuedBlocks1Ticks.size() == 0) || (this.nowBlock >= ICReplacer.this.core.getMaxReplaceBlocks())) {
                             sortList1(this.signBlock.getBlock(), this.AllBlocks);
                             this.thisTick = 0;
                             this.searchEnd = true;
@@ -481,7 +481,7 @@ public class MC1220 extends BaseIC {
                             this.QueuedBlocks1Ticks = null;
                             this.father.TaskList.remove(this.signLoc.getBlock().getLocation().toString());
                             Bukkit.getServer().getScheduler().cancelTask(this.TaskID);
-                            this.TaskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(MC1220.this.core, this, 1L, this.waitTicks);
+                            this.TaskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(ICReplacer.this.core, this, 1L, this.waitTicks);
                             return;
                         }
                     } else if (this.searchEnd) {

@@ -28,15 +28,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1700 extends BaseIC {
+public class ICTeleporter extends BaseIC {
 
     private int maxByPlayer = 5;
     private HashMap<String, TeleporterList> playerICList = new HashMap<String, TeleporterList>();
     private Random random = new Random();
 
-    public MC1700() {
+    public ICTeleporter() {
         this.ICName = "TELEPORTER";
-        this.ICNumber = "[MC1700]";
+        this.ICNumber = "ic.teleporter";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");

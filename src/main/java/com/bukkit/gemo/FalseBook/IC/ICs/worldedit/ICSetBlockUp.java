@@ -14,16 +14,16 @@ import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1206 extends BaseIC {
+public class ICSetBlockUp extends BaseIC {
 
-    public MC1206() {
-        this.ICName = "SET BLOCK BELOW";
-        this.ICNumber = "[MC1206]";
+    public ICSetBlockUp() {
+        this.ICName = "SET BLOCK ABOVE";
+        this.ICNumber = "ic.setblockup";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");
         this.chipState.setLines("BlockID[:SubID]", "FORCE to set the block even if there is already a block there.");
-        this.ICDescription = "The MC1206 sets a block of a specified type two blocks below the block behind the IC sign. <a href=\"MC1205.html\">MC1205</a> is the version of the IC that sets the block above.";
+        this.ICDescription = "The MC1205 sets a block of a specified type two blocks above the block behind the IC sign. <a href=\"MC1206.html\">MC1206</a> is the version of the IC that sets the block below.";
     }
 
     public void checkCreation(SignChangeEvent event) {
@@ -63,7 +63,7 @@ public class MC1206 extends BaseIC {
 
             boolean force = Parser.isString(signBlock.getLine(3), "force");
 
-            Location newBlockLoc = getICBlock(signBlock).getBlock().getRelative(0, -2, 0).getLocation();
+            Location newBlockLoc = getICBlock(signBlock).getBlock().getRelative(0, 2, 0).getLocation();
             if ((newBlockLoc.getBlock().getType().equals(Material.AIR)) || (force)) {
                 newBlockLoc.getBlock().setTypeIdAndData(item.getItemID(), item.getItemDataAsByte(), true);
                 switchLever(Lever.BACK, signBlock, true);

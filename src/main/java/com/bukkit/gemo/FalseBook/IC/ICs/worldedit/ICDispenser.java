@@ -14,11 +14,11 @@ import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class MC1201 extends BaseIC {
+public class ICDispenser extends BaseIC {
 
-    public MC1201() {
+    public ICDispenser() {
         this.ICName = "DISPENSER";
-        this.ICNumber = "[MC1201]";
+        this.ICNumber = "ic.dispenser";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");

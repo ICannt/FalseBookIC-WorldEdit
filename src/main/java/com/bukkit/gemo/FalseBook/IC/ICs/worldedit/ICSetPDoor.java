@@ -17,11 +17,11 @@ import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.util.Vector;
 
-public class MC1210 extends BaseIC {
+public class ICSetPDoor extends BaseIC {
 
-    public MC1210() {
+    public ICSetPDoor() {
         this.ICName = "SET P-DOOR";
-        this.ICNumber = "[MC1210]";
+        this.ICNumber = "ic.pdoor";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");

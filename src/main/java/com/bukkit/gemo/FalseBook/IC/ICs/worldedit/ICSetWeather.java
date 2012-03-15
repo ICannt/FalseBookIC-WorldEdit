@@ -11,11 +11,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1285 extends BaseIC {
+public class ICSetWeather extends BaseIC {
 
-    public MC1285() {
+    public ICSetWeather() {
         this.ICName = "SET WEATHER";
-        this.ICNumber = "[MC1285]";
+        this.ICNumber = "ic.setweather";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");

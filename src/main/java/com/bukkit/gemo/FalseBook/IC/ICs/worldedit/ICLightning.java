@@ -10,11 +10,11 @@ import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1203 extends BaseIC {
+public class ICLightning extends BaseIC {
 
-    public MC1203() {
+    public ICLightning() {
         this.ICName = "ZEUS BOLT";
-        this.ICNumber = "[MC1203]";
+        this.ICNumber = "ic.lightning";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");

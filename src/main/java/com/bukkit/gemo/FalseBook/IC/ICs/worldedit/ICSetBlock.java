@@ -15,11 +15,11 @@ import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1207 extends BaseIC {
+public class ICSetBlock extends BaseIC {
 
-    public MC1207() {
+    public ICSetBlock() {
         this.ICName = "SET BLOCK";
-        this.ICNumber = "[MC1207]";
+        this.ICNumber = "ic.setblock";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");

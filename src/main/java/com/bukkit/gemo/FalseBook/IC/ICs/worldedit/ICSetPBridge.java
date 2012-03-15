@@ -17,11 +17,11 @@ import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.util.Vector;
 
-public class MC1211 extends BaseIC {
+public class ICSetPBridge extends BaseIC {
 
-    public MC1211() {
+    public ICSetPBridge() {
         this.ICName = "SET P-BRIDGE";
-        this.ICNumber = "[MC1211]";
+        this.ICNumber = "ic.pbridge";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");

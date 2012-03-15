@@ -13,11 +13,11 @@ import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.util.Vector;
 
-public class MC1240 extends BaseIC {
+public class ICArrowShooter extends BaseIC {
 
-    public MC1240() {
+    public ICArrowShooter() {
         this.ICName = "ARROW SHOOTER";
-        this.ICNumber = "[MC1240]";
+        this.ICNumber = "ic.arrowshooter";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("", "", "");

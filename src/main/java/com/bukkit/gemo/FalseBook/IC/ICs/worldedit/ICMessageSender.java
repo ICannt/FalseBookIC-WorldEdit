@@ -13,11 +13,11 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1510 extends BaseIC {
+public class ICMessageSender extends BaseIC {
 
-    public MC1510() {
+    public ICMessageSender() {
         this.ICName = "MESSAGESENDER";
-        this.ICNumber = "[MC1510]";
+        this.ICNumber = "ic.msgsender";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");

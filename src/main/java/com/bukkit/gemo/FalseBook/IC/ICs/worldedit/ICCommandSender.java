@@ -11,11 +11,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1511 extends BaseIC {
+public class ICCommandSender extends BaseIC {
 
-    public MC1511() {
+    public ICCommandSender() {
         this.ICName = "COMMANDSENDER";
-        this.ICNumber = "[MC1511]";
+        this.ICNumber = "ic.cmdsender";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");

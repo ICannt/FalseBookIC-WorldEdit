@@ -23,11 +23,11 @@ import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1200 extends BaseIC {
+public class ICMobSpawner extends BaseIC {
 
-    public MC1200() {
+    public ICMobSpawner() {
         this.ICName = "MOB SPAWNER";
-        this.ICNumber = "[MC1200]";
+        this.ICNumber = "ic.mobspawner";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");

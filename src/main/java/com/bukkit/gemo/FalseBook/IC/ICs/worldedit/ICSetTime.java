@@ -10,11 +10,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.SignChangeEvent;
 
-public class MC1232 extends BaseIC {
+public class ICSetTime extends BaseIC {
 
-    public MC1232() {
+    public ICSetTime() {
         this.ICName = "SET-TIME";
-        this.ICNumber = "[MC1232]";
+        this.ICNumber = "ic.settime";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
         this.chipState.setOutputs("Output = Input", "", "");
