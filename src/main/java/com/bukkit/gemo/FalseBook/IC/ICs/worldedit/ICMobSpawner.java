@@ -50,7 +50,7 @@ public class ICMobSpawner extends BaseIC {
                 continue;
             }
             if ((mobLine.equalsIgnoreCase(entityTypes[i].name())) || (mobLine.equalsIgnoreCase("pig_zombie")) || (mobLine.equalsIgnoreCase("DOG")) || (mobLine.equalsIgnoreCase("ANGRYWOLF")) || (mobLine.equalsIgnoreCase("MAGMACUBE")) || (mobLine.equalsIgnoreCase("BLAZE"))) {
-                event.setLine(1, event.getLine(2).toUpperCase());
+                event.setLine(1, event.getLine(1).toUpperCase());
                 found = true;
                 break;
             }
