@@ -374,7 +374,7 @@ public class ICTeleporter extends BaseIC {
                 return;
             }
 
-            if (!targetStation.getLine(1).equalsIgnoreCase("ic.teleporter")) {
+            if (!targetStation.getLine(0).equalsIgnoreCase("ic.teleporter")) {
                 return;
             }
             if (!targetStation.getLine(1).equalsIgnoreCase(signBlock.getLine(2))) {
