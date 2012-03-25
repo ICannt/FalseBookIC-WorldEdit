@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -347,41 +348,50 @@ public class ICTeleporter extends BaseIC {
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
             if (signBlock.getLine(1).length() < 1) {
+                this.core.getLogger().log(Level.INFO, "A");
                 return;
             }
 
             if (signBlock.getLine(2).length() < 1) {
+                this.core.getLogger().log(Level.INFO, "B");
                 return;
             }
 
             String stationOwner = getStationOwner(signBlock.getBlock().getLocation());
             if (stationOwner == null) {
+                this.core.getLogger().log(Level.INFO, "C");
                 return;
             }
 
             Sign targetStation = getTargetStation(stationOwner, signBlock.getLine(2));
             if (targetStation == null) {
+                this.core.getLogger().log(Level.INFO, "D");
                 return;
             }
 
             HashSet<Block> transportBlockList = getBaseBlocks(signBlock);
             if (transportBlockList.size() < 1) {
+                this.core.getLogger().log(Level.INFO, "E");
                 return;
             }
 
             ArrayList<Player> playerList = getPlayersInPosition(transportBlockList);
             if (playerList.size() < 1) {
+                this.core.getLogger().log(Level.INFO, "F");
                 return;
             }
 
             if (!targetStation.getLine(0).equalsIgnoreCase("ic.teleporter")) {
+                this.core.getLogger().log(Level.INFO, "G");
                 return;
             }
             if (!targetStation.getLine(1).equalsIgnoreCase(signBlock.getLine(2))) {
+                this.core.getLogger().log(Level.INFO, "H");
                 return;
             }
             HashSet<Block> transportBlockListTarget = getBaseBlocks(targetStation);
             if (transportBlockListTarget.size() < 1) {
+                this.core.getLogger().log(Level.INFO, "I");
                 return;
             }
 
