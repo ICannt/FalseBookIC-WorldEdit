@@ -13,6 +13,7 @@ import net.minecraft.server.World;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.block.SignChangeEvent;
@@ -115,8 +116,15 @@ public class ICEntityCannon extends BaseIC {
                 }
             }
             
-            LivingEntity ent = world.spawnCreature(location, et);
-            ent.setVelocity(velocity);
+            final Entity ent = (Entity)world.spawnCreature(location, et);
+            final Vector vel = velocity;
+            ent.setVelocity(vel);
+            
+            this.core.getServer().getScheduler().scheduleSyncDelayedTask(this.core, new Runnable() {
+			    public void run() {
+			        ent.setVelocity(vel);
+			    }
+			}, 2);
         }
     }
 }
