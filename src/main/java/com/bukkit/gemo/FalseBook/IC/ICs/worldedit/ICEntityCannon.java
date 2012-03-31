@@ -58,10 +58,14 @@ public class ICEntityCannon extends BaseIC {
                 }
             }
             
-            if(et == null) {
+            if(et == null || !et.isSpawnable()) {
                 String types = "";
                 for(EntityType t : EntityType.values())
                 {
+                    if(!t.isSpawnable()) {
+                        continue;
+                    }
+                    
                     types = types + t.toString() + " ";
                 }
 
@@ -72,6 +76,10 @@ public class ICEntityCannon extends BaseIC {
             String types = "";
             for(EntityType t : EntityType.values())
             {
+                if(!t.isSpawnable()) {
+                    continue;
+                }
+                
                 types = types + t.toString() + " ";
             }
                 
@@ -116,15 +124,8 @@ public class ICEntityCannon extends BaseIC {
                 }
             }
             
-            final Entity ent = (Entity)world.spawnCreature(location, et);
-            final Vector vel = velocity;
-            ent.setVelocity(vel);
-            
-            this.core.getServer().getScheduler().scheduleSyncDelayedTask(this.core, new Runnable() {
-			    public void run() {
-			        ent.setVelocity(vel);
-			    }
-			}, 2);
+            Entity ent = (Entity)world.spawn(location, et.getEntityClass());
+            ent.setVelocity(velocity);
         }
     }
 }
