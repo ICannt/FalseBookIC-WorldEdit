@@ -20,7 +20,7 @@ import org.bukkit.util.Vector;
 
 public class ICEntityCannon extends BaseIC {
     public ICEntityCannon() {
-        this.ICName = "ARROW SHOOTER";
+        this.ICName = "ENTITY CANNON";
         this.ICNumber = "ic.entitycannon";
         setICGroup(ICGroup.WORLDEDIT);
         this.chipState = new BaseChip(true, false, false, "Clock", "", "");
@@ -30,9 +30,9 @@ public class ICEntityCannon extends BaseIC {
     }
 
     public void checkCreation(SignChangeEvent event) {
-        String type = event.getLine(1);
-        type = type.toUpperCase();
-        String speed = event.getLine(2);
+        String type = event.getLine(1) + event.getLine(2);
+        
+        String speed = event.getLine(3);
         try {
             Float speedValue = Float.parseFloat(speed);
             if(speedValue < 1.0f) {
@@ -41,14 +41,22 @@ public class ICEntityCannon extends BaseIC {
             if(speedValue > 32.0f) {
                 speedValue = 32.0f;
             }
-            event.setLine(1, speedValue.toString());
+            event.setLine(3, speedValue.toString());
         } catch (NumberFormatException e) {
             SignUtils.cancelSignCreation(event, "Type is 2nd line. Speed is 3rd line.");
             return;
         }
         
         try {
-            EntityType et = EntityType.fromName(type);
+            EntityType et = null;
+            for(EntityType t : EntityType.values())
+            {
+                if(type.compareToIgnoreCase(t.toString()) == 0) {
+                    et = t;
+                    break;
+                }
+            }
+            
             if(et == null) {
                 String types = "";
                 for(EntityType t : EntityType.values())
@@ -59,8 +67,7 @@ public class ICEntityCannon extends BaseIC {
                 SignUtils.cancelSignCreation(event, "Valid types are: " + types);
                 return;
             }
-            event.setLine(1, et.toString());
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             String types = "";
             for(EntityType t : EntityType.values())
             {
@@ -81,7 +88,7 @@ public class ICEntityCannon extends BaseIC {
             location.setY(location.getY() + 0.5d);
             location.setZ(location.getZ() + 0.5d);
             
-            String speed = signBlock.getLine(2);
+            String speed = signBlock.getLine(3);
             Float speedValue = Float.parseFloat(speed);
             
             Vector velocity = new Vector(0.0f, speedValue, 0.0f);
@@ -97,9 +104,18 @@ public class ICEntityCannon extends BaseIC {
 
             CraftWorld world = (CraftWorld)location.getWorld();
             
-            String type = signBlock.getLine(1);
+            String type = signBlock.getLine(1) + signBlock.getLine(2);
             
-            LivingEntity ent = world.spawnCreature(location, EntityType.fromName(type));
+            EntityType et = null;
+            for(EntityType t : EntityType.values())
+            {
+                if(type.compareToIgnoreCase(t.toString()) == 0) {
+                    et = t;
+                    break;
+                }
+            }
+            
+            LivingEntity ent = world.spawnCreature(location, et);
             ent.setVelocity(velocity);
         }
     }
