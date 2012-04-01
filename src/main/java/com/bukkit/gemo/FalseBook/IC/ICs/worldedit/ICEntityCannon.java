@@ -20,6 +20,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.util.Vector;
 
 public class ICEntityCannon extends BaseIC {
+
     public ICEntityCannon() {
         this.ICName = "ENTITY CANNON";
         this.ICNumber = "ic.entitycannon";
@@ -32,40 +33,38 @@ public class ICEntityCannon extends BaseIC {
 
     public void checkCreation(SignChangeEvent event) {
         String type = event.getLine(1) + event.getLine(2);
-        
+
         String speed = event.getLine(3);
         try {
             Float speedValue = Float.parseFloat(speed);
-            if(speedValue < 1.0f) {
-                speedValue = 1.0f;
+            if (speedValue < 0.0f) {
+                speedValue = 0.0f;
             }
-            if(speedValue > 32.0f) {
+            if (speedValue > 32.0f) {
                 speedValue = 32.0f;
             }
             event.setLine(3, speedValue.toString());
         } catch (NumberFormatException e) {
-            SignUtils.cancelSignCreation(event, "Type is 2nd line. Speed is 3rd line.");
+            SignUtils.cancelSignCreation(event, "Type is 2nd + 3rd line. Speed is 4th line.");
             return;
         }
-        
+
         try {
             EntityType et = null;
-            for(EntityType t : EntityType.values())
-            {
-                if(type.compareToIgnoreCase(t.toString()) == 0) {
+            for (EntityType t : EntityType.values()) {
+                if (type.compareToIgnoreCase(t.toString()) == 0) {
                     et = t;
                     break;
                 }
             }
-            
-            if(et == null || !et.isSpawnable()) {
+
+            if (et == null || !et.isSpawnable()) {
                 String types = "";
-                for(EntityType t : EntityType.values())
-                {
-                    if(!t.isSpawnable()) {
+                for (EntityType t : EntityType.values()) {
+                    if (!t.isSpawnable()) {
                         continue;
                     }
-                    
+
                     types = types + t.toString() + " ";
                 }
 
@@ -74,15 +73,14 @@ public class ICEntityCannon extends BaseIC {
             }
         } catch (Exception e) {
             String types = "";
-            for(EntityType t : EntityType.values())
-            {
-                if(!t.isSpawnable()) {
+            for (EntityType t : EntityType.values()) {
+                if (!t.isSpawnable()) {
                     continue;
                 }
-                
+
                 types = types + t.toString() + " ";
             }
-                
+
             SignUtils.cancelSignCreation(event, "Valid types are: " + types);
             return;
         }
@@ -91,15 +89,15 @@ public class ICEntityCannon extends BaseIC {
     public void Execute(Sign signBlock, InputState currentInputs, InputState previousInputs) {
         if ((currentInputs.isInputOneHigh()) && (previousInputs.isInputOneLow())) {
             int dir = SignUtils.getDirection(signBlock);
-            
+
             Location location = ICUtils.getLeverPos(signBlock).clone();
             location.setX(location.getX() + 0.5d);
             location.setY(location.getY() + 0.5d);
             location.setZ(location.getZ() + 0.5d);
-            
+
             String speed = signBlock.getLine(3);
             Float speedValue = Float.parseFloat(speed);
-            
+
             Vector velocity = new Vector(0.0f, speedValue, 0.0f);
             if (dir == 1) {
                 velocity = new Vector(0.0f, 0.0f, -speedValue);
@@ -111,20 +109,19 @@ public class ICEntityCannon extends BaseIC {
                 velocity = new Vector(speedValue, 0.0f, 0.0f);
             }
 
-            CraftWorld world = (CraftWorld)location.getWorld();
-            
+            CraftWorld world = (CraftWorld) location.getWorld();
+
             String type = signBlock.getLine(1) + signBlock.getLine(2);
-            
+
             EntityType et = null;
-            for(EntityType t : EntityType.values())
-            {
-                if(type.compareToIgnoreCase(t.toString()) == 0) {
+            for (EntityType t : EntityType.values()) {
+                if (type.compareToIgnoreCase(t.toString()) == 0) {
                     et = t;
                     break;
                 }
             }
-            
-            Entity ent = (Entity)world.spawn(location, et.getEntityClass());
+
+            Entity ent = (Entity) world.spawn(location, et.getEntityClass());
             ent.setVelocity(velocity);
         }
     }

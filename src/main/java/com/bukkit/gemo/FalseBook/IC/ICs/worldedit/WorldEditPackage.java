@@ -30,7 +30,7 @@ public class WorldEditPackage extends ExternalICPackage {
         addIC(ICTeleporter.class);
         addIC(ICTimeControl.class);
         addIC(ICEntityCannon.class);
-        
+
         addUpgrader("[MC1200]", new ICUpgraderMC("ic.mobspawner"));
         addUpgrader("[MC1201]", new ICUpgraderMC("ic.dispenser"));
         addUpgrader("[MC1203]", new ICUpgraderMC("ic.lightning"));
